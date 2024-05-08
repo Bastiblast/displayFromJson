@@ -26,7 +26,13 @@ let HTMLAllBody = ""
         const TrBody = []
         for (const td in body){
             TrBody.push(body[td])
-    HTMLTdBody = TrBody.map((td) => `<td>${td}</td>`).join("")
+    HTMLTdBody = TrBody.map((td) => {
+        const stringifyTdObject = JSON.stringify(td).replaceAll("{","").replaceAll("}","").replaceAll('"',"").replaceAll(",","<br>")
+        console.log("td = ",td)
+        console.log("typeof td = ",typeof td)
+        console.log("JSON.stringify(td) = ",JSON.stringify(td).replaceAll("{","").replaceAll("}","").replaceAll('"',""))
+        if(typeof td !== "object"){return `<td>${td}</td>`}
+    else {return `<td>${stringifyTdObject}</td>`}}).join("")
 
         }
         HTMLTrBody = `<tr>${HTMLTdBody}<tr>`

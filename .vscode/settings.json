@@ -6,4 +6,8 @@
         "cert": "true",
         "enable": 1
     },
+    "editor.fontFamily": "JetBrains Mono, Consolas, 'Courier New', monospace",
+    "editor.renderWhitespace": "trailing",
+    "editor.fontSize": 14,
+    "editor.linkedEditing": true,
 }
