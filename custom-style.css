@@ -1,11 +1,14 @@
 header {
     display: block;
-    position:relative;
+    position:fixed;
+    padding: 20px;
     top : 0px;
     left: 0px;
     right: 0px;
     height: 100px;
-    background-color: rgb(237, 141, 24);
+    color: rgb(255, 255, 255);
+    background: url(librairy/steamwallpaper.jpg);
+    z-index: 1500;
 }
 
 .table-container {
@@ -13,49 +16,77 @@ header {
 }
 
 body {
+    position: absolute;
     display: flex;
     flex-direction: column;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
 }
 
 corpus {
+    top: 100px;
     height: 100%;
+    width: 100%;
     bottom: 0px;
-    position: static;
+    right: 0px;
+    position: relative;
 }
 container {
-    top: 100px;
+    height: 100%;
+    position: relative;
+    top: 0px;
     right: 0px;
     left: 0px;
-    height: 100%;
     bottom: 0px;
     display: flex;
-    position: absolute;
 }
 
 #navbar {
-    position: relative;
+    position: fixed;
+    top: 100px;
     bottom: 0px;
-    height: 100%;
     width: 160px;
     padding: 20px;
-    background-color: rgb(56, 209, 148);
+    background:url(librairy/spacewallpaper.jpg!d);
+    background-size:220px;
+    background-position: 0px;
+    background-clip: border-box;
+    background-position-y: 30px;
 }
 
 .dropdown-menu{
+ 
     position: relative;
     display: block;
 }
 
-.selection-menu {
-    display: flex;
-    position: absolute;
-    background-color: rgb(252, 214, 26);
-    width: 100%;
+.dropdown-menu h6 {
+    font-weight: bolder;
+    color: rgb(0, 0, 0);
+}
 
+.selection-menu {
+    left: 160px;
+    display: flex;
+    position:fixed;
+    background-color: rgb(162, 196, 211);
+    width: 100%;
+    right: 0px;
+    z-index: 50;
+}
+
+.selection-menu label{
+    font-weight: bolder;
+    color: rgb(26, 21, 61);
 }
 
 .table-container{
-    position: absolute;
-    top: 120px;
+    top: 180px;
+    left: 160px;
+    position: relative;
+    width: 100%;
+    padding: 20px;
 
 }
