@@ -17,11 +17,25 @@ body {
     flex-direction: column;
 }
 
+corpus {
+    height: 100%;
+    bottom: 0px;
+    position: static;
+}
 container {
+    top: 100px;
+    right: 0px;
+    left: 0px;
+    height: 100%;
+    bottom: 0px;
     display: flex;
+    position: absolute;
 }
 
-navbar {
+#navbar {
+    position: relative;
+    bottom: 0px;
+    height: 100%;
     width: 160px;
     padding: 20px;
     background-color: rgb(56, 209, 148);
@@ -33,8 +47,15 @@ navbar {
 }
 
 .selection-menu {
-
     display: flex;
+    position: absolute;
     background-color: rgb(252, 214, 26);
+    width: 100%;
+
+}
+
+.table-container{
+    position: absolute;
+    top: 120px;
 
 }
