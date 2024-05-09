@@ -1,13 +1,22 @@
 function placeHolder(type,number){
+
+
   return `https://jsonplaceholder.typicode.com/${type}/${number}`
 }
- 
 
-const loadData = async () => {
+const types = [
+  "posts",
+  "comments"	,
+  "albums"	,
+  "photos",
+  "todos",
+  "users"]
+
+  async function loadData(types) {
   try {
-    const data = await fetch(placeHolder("users",""));
+    console.log(`Téléchargement de la page ${placeHolder(types,"")}.`)
+    const data = await fetch(placeHolder(types,""));
     const jsonData = await data.json();
-    console.log("jsonData = ", jsonData)
    //  Modify DOM based on jsonData
     displayTodoPromise(jsonData)
   } catch (error) {

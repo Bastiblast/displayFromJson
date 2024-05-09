@@ -10,9 +10,7 @@ function createHeaderFromJson(json){
             headers.push(head)
        }
     }
-    console.log("headers",headers)
    const HTMLHeaders = headers.map((head) => `<th>${head}</th>` ).join("")
-console.log("HTMLHeaders",HTMLHeaders)
 return HTMLHeaders
 }
 
@@ -28,10 +26,7 @@ let HTMLAllBody = ""
             TrBody.push(body[td])
     HTMLTdBody = TrBody.map((td) => {
         const stringifyTdObject = JSON.stringify(td).replaceAll("{","").replaceAll("}","").replaceAll('"',"").replaceAll(",","<br>")
-        console.log("td = ",td)
-        console.log("typeof td = ",typeof td)
-        console.log("JSON.stringify(td) = ",JSON.stringify(td).replaceAll("{","").replaceAll("}","").replaceAll('"',""))
-        if(typeof td !== "object"){return `<td>${td}</td>`}
+    if(typeof td !== "object"){return `<td>${td}</td>`}
     else {return `<td>${stringifyTdObject}</td>`}}).join("")
 
         }
@@ -43,23 +38,55 @@ let HTMLAllBody = ""
 
 function displayTodoPromise(json) {
     const jsonString = JSON.stringify(json,null,4)
-   // console.log("jsonString",jsonString)
     const newDiv = document.createElement("div")
+    newDiv.classList = "table-container"
     const HTMLHeaders = createHeaderFromJson(json)
     const HTMLBodyData = createBodyDataFromJson(json)
 
    //console.log("json[0]",json[0])
   // console.log("json.length",json.length)
    newDiv.innerHTML = `
-   <table><thead>
+   <table id="table-view" class="table table-sm table-striped"><thead>
    ${HTMLHeaders}</thead>
    <tbody>
    ${HTMLBodyData}
    </tbody></table>
    `
-   document.querySelector("body").append(newDiv)
+   document.getElementById("table-receiver").append(newDiv)
 
 }
-//console.log(displayTodoPromise())
-loadData()
+
+// Ajout de Event sur le choix du type PlaceHolders à utiliser.
+
+ document.querySelectorAll(".dropdown-item").forEach(itemButton => {
+
+    itemButton.addEventListener("click",
+    function(e){
+     
+       try{
+        const tableContainer = document.getElementById("table-receiver")
+        console.log("tableContainer = ",tableContainer)
+        const table = tableContainer.querySelector(".table-container")
+        console.log("table = ",table)
+        const clickSelection = e.target.textContent.toLowerCase()
+        
+        console.log(`Sélection de la liste ${clickSelection}`)
+   
+        if(table !== null){
+       
+            const replace = table.remove() 
+            console.log(`Replace Child de ${table} dans ${tableContainer} par nouvelle données.`)
+            table.replaceWith(loadData(clickSelection))
+            tableContainer.innerText = ""
+       }
+        else {
+            console.log("Pas de table existante, données initiale chargées.")
+            tableContainer.append(loadData(clickSelection))}
+            tableContainer.innerText = ""
+    }
+        catch {(e) => console.log("erreur" + e)}
+    
+}
+)
+})
 

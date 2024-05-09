@@ -1,14 +1,64 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>classroom</title>
     <script src="datacenter.js" defer></script>
     <script src="DOM.js" defer></script>
     <script src="builder.js" defer></script>
+    <script src="bootstrap-5.0.2-dist/bootstrap-5.0.2-dist/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="bootstrap-5.0.2-dist/bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="custom-style.css">
+
 </head>
+
 <body>
     
+    <header><h1>Bast ClassRoom</h1></header>
+    
+    <container>
+
+        <navbar>
+            <h4>Navigation</h2>
+            <ul>
+                <li>Vue Globale</li>
+
+                <li>Vu Focus 1</li>
+
+                <li>Vu Focus 2</li>
+
+                <li>Vu Total</li>
+            </ul>
+
+        </navbar>
+
+        <corpus>
+            
+            <div class="selection-menu">
+
+                <label for="list-type">Type de liste</label>
+                <input type="text" name="list-type" id="list-type">
+                <button>
+
+                </button>
+                <div class="dropdown-menu">
+                    <h6 class="dropdown-header">PlaceHolder Types</h6>
+                    <a class="dropdown-item" href="#">Users</a>
+                    <a class="dropdown-item" href="#">Todos</a>
+                  </div>
+
+            </div>
+
+            <div id ="table-receiver">
+            </div>
+
+        </corpus>
+
+    </container>
+
 </body>
+
 </html>

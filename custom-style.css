@@ -1,0 +1,40 @@
+header {
+    display: block;
+    position:relative;
+    top : 0px;
+    left: 0px;
+    right: 0px;
+    height: 100px;
+    background-color: rgb(237, 141, 24);
+}
+
+.table-container {
+    display: flex;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+container {
+    display: flex;
+}
+
+navbar {
+    width: 160px;
+    padding: 20px;
+    background-color: rgb(56, 209, 148);
+}
+
+.dropdown-menu{
+    position: relative;
+    display: block;
+}
+
+.selection-menu {
+
+    display: flex;
+    background-color: rgb(252, 214, 26);
+
+}
