@@ -37,9 +37,9 @@ let HTMLAllBody = ""
 }
 
 function displayTodoPromise(json) {
-    const jsonString = JSON.stringify(json,null,4)
     const newDiv = document.createElement("div")
     newDiv.classList = "table-container"
+    newDiv.id = "result-table"
     const HTMLHeaders = createHeaderFromJson(json)
     const HTMLBodyData = createBodyDataFromJson(json)
 
@@ -52,7 +52,11 @@ function displayTodoPromise(json) {
    ${HTMLBodyData}
    </tbody></table>
    `
-   document.getElementById("table-receiver").append(newDiv)
+    const tableReceiver = document.getElementById("table-receiver")
+
+    console.log("tableReceiver",tableReceiver)
+    console.log("newDiv",newDiv.innerHTML)
+    tableReceiver.appendChild(newDiv)
 
 }
 
@@ -62,31 +66,73 @@ function displayTodoPromise(json) {
 
     itemButton.addEventListener("click",
     function(e){
-     
-       try{
-        const tableContainer = document.getElementById("table-receiver")
-        console.log("tableContainer = ",tableContainer)
-        const table = tableContainer.querySelector(".table-container")
-        console.log("table = ",table)
         const clickSelection = e.target.textContent.toLowerCase()
-        
-        console.log(`Sélection de la liste ${clickSelection}`)
-   
-        if(table !== null){
-       
-            const replace = table.remove() 
-            console.log(`Replace Child de ${table} dans ${tableContainer} par nouvelle données.`)
-            table.replaceWith(loadData(clickSelection))
-            tableContainer.innerText = ""
-       }
-        else {
-            console.log("Pas de table existante, données initiale chargées.")
-            tableContainer.append(loadData(clickSelection))}
-            tableContainer.innerText = ""
-    }
-        catch {(e) => console.log("erreur" + e)}
+    
+loadSelection(loadData(clickSelection))
     
 }
 )
 })
 
+const searchInput = document.getElementById("search-input")
+
+searchInput.addEventListener("input",function(e){
+    const input = e.target.value
+    console.log("input",input)
+    sortTable(input)
+})
+
+ async function sortTable(input){
+
+  const stringJson = await localStorage.getItem("freshJson")
+
+    const json =  await JSON.parse(stringJson)
+
+    const tableContainer = document.getElementById("result-table")
+
+    const table = tableContainer.querySelector(".table-container")
+
+    const searchInput = document.getElementById("search-input")
+
+    const filteredJson =  await json.filter(function (fjson){
+        console.log("json.filter(function",input === fjson.name)
+        return input === fjson.name
+    })
+
+    console.log("filteredJson",filteredJson)
+    loadSelection(displayTodoPromise(filteredJson))
+}
+
+
+function loadSelection(e){
+
+    
+   console.log()
+    try{
+        console.log("loadSelection",e)
+        const tableContainer = document.getElementById("result-table")
+        const tableReceiver = document.getElementById("table-receiver")
+        console.log("tableContainer = ",tableContainer)
+        const table = document.getElementById("result-table")
+        console.log("table = ",table)
+    if(table !== null){
+        while (tableContainer.firstChild) {
+            tableContainer.removeChild(tableContainer.lastChild);
+          }
+        console.log(`Replace Child de ${table} dans ${tableContainer} par nouvelle données.`)
+        table.replaceWith(e)
+      //  tableContainer.innerText = ""
+   }
+    else {
+        console.log("Pas de table existante, données initiale chargées.")
+       // tableReceiver.innerHTML = ""
+        tableReceiver.innerText = ""
+        displayTodoPromise(e)
+    }
+        tableReceiver.innerText = ""
+        tableContainer.innerText = ""
+        
+}
+    catch {(e) => console.log("erreur" + e)}
+
+}

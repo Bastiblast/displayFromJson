@@ -17,6 +17,8 @@ const types = [
     console.log(`Téléchargement de la page ${placeHolder(types,"")}.`)
     const data = await fetch(placeHolder(types,""));
     const jsonData = await data.json();
+    const jsonString = await JSON.stringify(jsonData)
+    localStorage.setItem("freshJson",jsonString)
    //  Modify DOM based on jsonData
     displayTodoPromise(jsonData)
   } catch (error) {

@@ -6,9 +6,10 @@ header {
     left: 0px;
     right: 0px;
     height: 100px;
-    color: rgb(255, 255, 255);
-    background: url(librairy/steamwallpaper.jpg);
+    color: rgb(0, 0, 0);
+    background: linear-gradient(to bottom left,transparent,white),url(librairy/steamwallpaper.jpg);
     z-index: 1500;
+    border: 0px;
 }
 
 .table-container {
@@ -32,6 +33,7 @@ corpus {
     bottom: 0px;
     right: 0px;
     position: relative;
+    border: 0px;
 }
 container {
     height: 100%;
@@ -41,6 +43,7 @@ container {
     left: 0px;
     bottom: 0px;
     display: flex;
+    border: 0px;
 }
 
 #navbar {
@@ -48,12 +51,14 @@ container {
     top: 100px;
     bottom: 0px;
     width: 160px;
-    padding: 20px;
-    background:url(librairy/spacewallpaper.jpg!d);
-    background-size:220px;
+    padding: 20px;   
+    background:linear-gradient(to top,transparent,95%,white),url(librairy/spacewallpaper.jpg!d);
+   
+    border: 0px;
+   background-size:220px;
     background-position: 0px;
     background-clip: border-box;
-    background-position-y: 30px;
+
 }
 
 .dropdown-menu{
@@ -87,6 +92,6 @@ container {
     left: 160px;
     position: relative;
     width: 100%;
-    padding: 20px;
+    padding: 0px;
 
 }
