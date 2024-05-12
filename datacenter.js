@@ -18,10 +18,10 @@ const types = [
     const data = await fetch(placeHolder(types,""));
     const jsonData = await data.json();
     const jsonString = await JSON.stringify(jsonData)
-    localStorage.setItem("freshJson",jsonString)
+    await localStorage.setItem("freshJson",jsonString)
    //  Modify DOM based on jsonData
-    displayTodoPromise(jsonData)
+    return jsonData
   } catch (error) {
-    console.error('Error loading data:', error);
+    return console.error('Error loading data:', error);
   }
 }

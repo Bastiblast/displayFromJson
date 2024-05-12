@@ -1,3 +1,8 @@
+/**
+ * 
+ * @param {object} json 
+ * @returns {string} HTML Header in string
+ */
 function createHeaderFromJson(json){
     const headers = []
 
@@ -14,6 +19,11 @@ function createHeaderFromJson(json){
 return HTMLHeaders
 }
 
+/**
+ * 
+ * @param {*} json 
+ * @returns {string} HTML Body in string
+ */
 function createBodyDataFromJson(json){
 let HTMLAllBody = ""
 
@@ -36,7 +46,12 @@ let HTMLAllBody = ""
     return HTMLAllBody
 }
 
-function displayTodoPromise(json) {
+/**
+ * 
+ * @param {object} json 
+ * @returns {Element} Return a div table of the given json.
+ */
+function createHTMLElementByJson(json) {
     const newDiv = document.createElement("div")
     newDiv.classList = "table-container"
     newDiv.id = "result-table"
@@ -56,8 +71,8 @@ function displayTodoPromise(json) {
 
     console.log("tableReceiver",tableReceiver)
     console.log("newDiv",newDiv.innerHTML)
-    tableReceiver.appendChild(newDiv)
-
+    //tableReceiver.appendChild(newDiv)
+    return newDiv
 }
 
 // Ajout de Event sur le choix du type PlaceHolders à utiliser.
@@ -65,21 +80,26 @@ function displayTodoPromise(json) {
  document.querySelectorAll(".dropdown-item").forEach(itemButton => {
 
     itemButton.addEventListener("click",
-    function(e){
+    async function(e){
         const clickSelection = e.target.textContent.toLowerCase()
-    
-loadSelection(loadData(clickSelection))
-    
+
+const json = await loadData(clickSelection)
+
+//console.log("loadData(clickSelection) = ",loadData(clickSelection))
+console.log("json = ",json)
+loadSelection(createHTMLElementByJson(json))
+
 }
 )
 })
 
 const searchInput = document.getElementById("search-input")
 
-searchInput.addEventListener("input",function(e){
+searchInput.addEventListener("input",async function(e){
     const input = e.target.value
     console.log("input",input)
-    sortTable(input)
+    json = await sortTable(input)
+    loadSelection(createHTMLElementByJson(json))
 })
 
  async function sortTable(input){
@@ -95,44 +115,52 @@ searchInput.addEventListener("input",function(e){
     const searchInput = document.getElementById("search-input")
 
     const filteredJson =  await json.filter(function (fjson){
-        console.log("json.filter(function",input === fjson.name)
-        return input === fjson.name
-    })
+      //  console.log("json.filter(function",input === fjson.name)
+      let isTrue = false
+      for (let eachCol in fjson){
+      //  console.log("fjson[eachCol] = ",fjson[eachCol])
+        const stringElement = fjson[eachCol].toString()
+        const isStringPart = stringElement.toLowerCase().indexOf(input.toLowerCase()) >= 0
+        console.log("isStringPart = ",isStringPart)
+      
+         if(isStringPart){
+         isTrue = true}
+    }
+    return isTrue})
 
+    return filteredJson
     console.log("filteredJson",filteredJson)
-    loadSelection(displayTodoPromise(filteredJson))
 }
 
 
-function loadSelection(e){
+function loadSelection(element){
 
     
    console.log()
     try{
-        console.log("loadSelection",e)
+        console.log("loadSelection",element)
         const tableContainer = document.getElementById("result-table")
         const tableReceiver = document.getElementById("table-receiver")
         console.log("tableContainer = ",tableContainer)
         const table = document.getElementById("result-table")
         console.log("table = ",table)
     if(table !== null){
-        while (tableContainer.firstChild) {
-            tableContainer.removeChild(tableContainer.lastChild);
+        while (tableReceiver.firstChild) {
+            console.log("Is Child ? ",tableReceiver.firstChild)
+            tableReceiver.removeChild(tableReceiver.lastChild);
           }
         console.log(`Replace Child de ${table} dans ${tableContainer} par nouvelle données.`)
-        table.replaceWith(e)
+        
       //  tableContainer.innerText = ""
    }
     else {
         console.log("Pas de table existante, données initiale chargées.")
-       // tableReceiver.innerHTML = ""
-        tableReceiver.innerText = ""
-        displayTodoPromise(e)
-    }
-        tableReceiver.innerText = ""
-        tableContainer.innerText = ""
+      
+        
+    } tableReceiver.appendChild(element)
+        
         
 }
-    catch {(e) => console.log("erreur" + e)}
+    catch {(element) => console.log("erreur" + element)}
 
 }
