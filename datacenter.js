@@ -17,6 +17,7 @@ const types = [
       const jsonData = await data.json();
       const jsonString = await JSON.stringify(jsonData)
       await localStorage.setItem(localJsonName,jsonString)
+      await localStorage.setItem("filteredJson",null)
     return jsonData
     } 
     catch (error) {

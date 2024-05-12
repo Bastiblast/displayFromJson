@@ -32,6 +32,36 @@ searchInput.addEventListener("input",
     }
 )
 
+/** Add Event listener on Header to sort column
+ * 
+ */
+async function listenOnThClick(){
+    document.querySelectorAll("th").forEach(
+        async function (th){
+            th.addEventListener("click",
+                async function(e){
+
+                    const filteredJsonString = await localStorage.getItem("filteredJson") 
+                    const freshJsonString = await localStorage.getItem("freshJson")
+                    let lastJsonString = {}
+
+                    if(filteredJsonString !== "null") { lastJsonString = filteredJsonString 
+                    }    
+                    else{lastJsonString = freshJsonString}
+                    
+                    let lastJson = await JSON.parse(lastJsonString)
+                    const selectedHeader = e.target.textContent
+
+                    lastJson = await lastJson.sort((a,b) => {
+                        if(a[selectedHeader] < b[selectedHeader]){return -1}
+                    })
+                    cleanAndFillContainer(createHTMLElementByJson(lastJson),"table-receiver")
+                }
+            )
+        }
+    )
+}
+
 /** Create thead from a json in html format.
  * 
  * @param {object} json 
@@ -106,7 +136,7 @@ function createHTMLElementByJson(json) {
     ${HTMLBodyData}
     </tbody></table>
     `
-    
+
     return newDiv
 }
 
@@ -136,16 +166,16 @@ function createHTMLElementByJson(json) {
       const objectElement = (typeof fjson[eachCol] === "object")? JSON.stringify(fjson[eachCol]):fjson[eachCol]
         const stringElement = objectElement.toString()
         const isStringPart = stringElement.toLowerCase().indexOf(input.toLowerCase()) >= 0
-        console.log("stringElement = ",stringElement)
-        console.log("isStringPart = ",isStringPart)
       
          if(isStringPart){
          isTrue = true}
     }
     return isTrue})
-
-    return filteredJson
+    
+    await localStorage.setItem("filteredJson",JSON.stringify(filteredJson))
     console.log("filteredJson",filteredJson)
+    return filteredJson
+  
 }
 
 /** Clean a container and fill with a new Element.
@@ -171,6 +201,7 @@ function cleanAndFillContainer(element,receiverClassName){
         } 
     
     tableReceiver.appendChild(element)
+    listenOnThClick()
 
     }
 
