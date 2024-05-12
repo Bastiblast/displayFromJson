@@ -35,8 +35,8 @@ searchInput.addEventListener("input",
 /** Add Event listener on Header to sort column
  * 
  */
-async function listenOnThClick(){
-    document.querySelectorAll("th").forEach(
+async function listenOnThClick(target){
+    document.querySelectorAll(target).forEach(
         async function (th){
             th.addEventListener("click",
                 async function(e){
@@ -130,7 +130,7 @@ function createHTMLElementByJson(json) {
     const HTMLBodyData = createBodyDataFromJson(json)
 
     newDiv.innerHTML = `
-    <table id="table-view" class="table table-sm table-striped"><thead>
+    <table id="table-view" class="table table-hover table-reponsive-sm"><thead>
     ${HTMLHeaders}</thead>
     <tbody>
     ${HTMLBodyData}
@@ -201,7 +201,7 @@ function cleanAndFillContainer(element,receiverClassName){
         } 
     
     tableReceiver.appendChild(element)
-    listenOnThClick()
+    listenOnThClick("th")
 
     }
 
