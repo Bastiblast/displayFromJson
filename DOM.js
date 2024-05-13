@@ -51,12 +51,34 @@ async function listenOnThClick(target){
                     
                     let lastJson = await JSON.parse(lastJsonString)
                     const selectedHeader = e.target.textContent
+                   // console.log("e.target.classList.value = ",e.target.classList)
+                    
+                    switch (e.currentTarget.classList.value){
+                        case "" :
+                        console.log("switch case to empty classList")
+                        lastJson = await lastJson.sort((a,b) => {
+                            if(a[selectedHeader] < b[selectedHeader]){return -1}
+                        })
+                        cleanAndFillContainer(createHTMLElementByJson(lastJson),"table-receiver")
+                        e.target.classList.add("sorted")  
+                          
+                        break                     
+                        case "sorted" :
+                        console.log("switch case to sorted classList")
+                        console.log("e.target.classList = ",e.target.classList)
+                        lastJson = await lastJson.sort((a,b) => {
+                            if(a[selectedHeader] > b[selectedHeader]){return -1}
+                        })
+                        cleanAndFillContainer(createHTMLElementByJson(lastJson),"table-receiver")
+                        e.target.classList.add("unsorted")  
 
-                    lastJson = await lastJson.sort((a,b) => {
-                        if(a[selectedHeader] < b[selectedHeader]){return -1}
-                    })
-                    cleanAndFillContainer(createHTMLElementByJson(lastJson),"table-receiver")
+                        break
                 }
+                console.log("e.target.classList.value = ",e.target.classList.value)
+
+                
+
+            }
             )
         }
     )
