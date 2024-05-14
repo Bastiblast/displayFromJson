@@ -12,7 +12,7 @@ document.querySelectorAll(".dropdown-item").forEach(
 
             const json = await loadData(clickSelection,"freshJson")
 
-            cleanAndFillContainer(createHTMLElementByJson(json),"table-receiver")
+            cleanAndFillContainer(createHTMLElementByJson({"json":json,"id":clickSelection}),"table-receiver")
             }
         )
     }
@@ -27,8 +27,8 @@ searchInput.addEventListener("input",
 
     async function(e){
     const input = e.target.value
-    json = await sortTable(input,"freshJson")
-    cleanAndFillContainer(createHTMLElementByJson(json),"table-receiver")
+    json = await filteredTable(input,"freshJson")
+    cleanAndFillContainer(createHTMLElementByJson({"json":json,"id":""}),"table-receiver")
     }
 )
 
@@ -51,25 +51,27 @@ async function listenOnThClick(target){
                     
                     let lastJson = await JSON.parse(lastJsonString)
                     const selectedHeader = e.target.textContent
-                   
+                   const selectionId = e.target.id
+                   console.log(selectionId)
+                   console.log("e.currentTarget.classList.value = ",e.currentTarget.classList.value)
                     switch (e.currentTarget.classList.value){
-                        case "undefined" :
+                        case "" :
                         lastJson = await lastJson.sort((a,b) => {
                             if(a[selectedHeader] < b[selectedHeader]){return -1}
                         })
-                        cleanAndFillContainer(createHTMLElementByJson(lastJson,"sorted"),"table-receiver")
+                        cleanAndFillContainer(createHTMLElementByJson({"json":lastJson,"id":""},{"id":selectionId,"class":"sorted"}),"table-receiver")
                         break                     
                         case "sorted" :
                             lastJson = await lastJson.sort((a,b) => {
                             if(a[selectedHeader] > b[selectedHeader]){return -1}
                         })
-                        cleanAndFillContainer(createHTMLElementByJson(lastJson,"unsorted"),"table-receiver")
+                        cleanAndFillContainer(createHTMLElementByJson({"json":lastJson,"id":""},{"id":selectionId,"class":"unsorted"}),"table-receiver")
                         break
                         case "unsorted" :
                             lastJson = await lastJson.sort((a,b) => {
                             if(a[selectedHeader] < b[selectedHeader]){return -1}
                             })
-                        cleanAndFillContainer(createHTMLElementByJson(lastJson,"sorted"),"table-receiver")
+                        cleanAndFillContainer(createHTMLElementByJson({"json":lastJson,"id":""},{"id":selectionId,"class":"sorted"}),"table-receiver")
                         break    
                     }
             }
@@ -84,8 +86,9 @@ async function listenOnThClick(target){
  * @returns {string} HTML Header in string
  */
 function createHeaderFromJson(json,classDOMmodificator){
+    console.log(classDOMmodificator)
+    console.log(json)
     const headers = []
-
     if (json.length === undefined){
         for (const head in json){
         headers.push(head)
@@ -97,8 +100,17 @@ function createHeaderFromJson(json,classDOMmodificator){
         }
     }
 
-const HTMLHeaders = headers.map((head) => `<th id="${head}" class="${classDOMmodificator}">${head}</th>` ).join("")
+const HTMLHeaders = headers.map(function(head) {
+    if(classDOMmodificator !== undefined){
+        if(head===classDOMmodificator.id){
+            return `<th id="${head}" class="${classDOMmodificator.class}">${head}</th>`
+        } else {return `<th id="${head}">${head}</th>`} 
+           
+    } else {return `<th id="${head}">${head}</th>`} 
+        
+}).join("")
 
+    
 return HTMLHeaders
 }
 
@@ -138,12 +150,13 @@ function createBodyDataFromJson(json){
  */
 function createHTMLElementByJson(json,classDOMmodificator) {
 
+    console.log("json = ",json.json)
     const newDiv = document.createElement("div")
     newDiv.classList = "table-container"
     newDiv.id = "result-table"
 
-    const HTMLHeaders = createHeaderFromJson(json,classDOMmodificator)
-    const HTMLBodyData = createBodyDataFromJson(json)
+    const HTMLHeaders = createHeaderFromJson(json.json,classDOMmodificator)
+    const HTMLBodyData = createBodyDataFromJson(json.json)
 
     newDiv.innerHTML = `
     <table id="table-view" class="table table-hover table-reponsive-sm"><thead>
@@ -162,7 +175,7 @@ function createHTMLElementByJson(json,classDOMmodificator) {
  * @param {string} localJsonName 
  * @returns 
  */
- async function sortTable(input,localJsonName){
+ async function filteredTable(input,localJsonName){
 
   const stringJson = await localStorage.getItem(localJsonName)
 

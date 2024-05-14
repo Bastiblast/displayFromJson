@@ -97,7 +97,9 @@ container {
 }
 
 #table-receiver {
+    
+    position: absolute;
     left: 0px;
-    position: static;
-    width: 85%;
+    right: 0px;
+    width: 100%;
 }
