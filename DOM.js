@@ -238,3 +238,32 @@ function cleanAndFillContainer(element,receiverClassName){
 
 }
 
+function HTMLTableToJson(tableId){
+    const table = document.getElementById(tableId)
+
+    function HTMLTableToJsonTh(){
+        const tableHeaders = table.querySelectorAll("th")
+        const headers = []
+        let thObjects = []
+        let jsonString
+        tableHeaders.forEach(function(tableHeader){
+            thObjects.push(`"${tableHeader.textContent}":{"id":"${tableHeader.id}","class":"${tableHeader.class}"}`)
+        })
+        
+        jsonString = thObjects.join(",")
+        const startingObj = '{"th":{'
+        jsonString = startingObj.concat(jsonString).concat("}}")
+       // const thJsonObject = jsonString.join("")
+        // console.log(thJsonObject)
+        return JSON.parse(jsonString)
+    }
+
+    console.log(HTMLTableToJsonTh())
+
+    function HTMLTableToJsonTd(){
+        console.log(table.querySelectorAll("tr"))
+    }
+    HTMLTableToJsonTd()
+}
+
+HTMLTableToJson("table-view")
