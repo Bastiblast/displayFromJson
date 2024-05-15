@@ -1,21 +1,24 @@
-class ActivePicker {
+function ActivePicker(id, login, fullName) {
+    const picker = {
+        id: id,
+        login: login,
+        fullName: fullName,
+        roster: [], // Initially empty array
+        rosterEmployeeRow: [], // Initially empty array
+        tenure: undefined
+    };
 
-    constructor() {
-        this.id = id
-        this.login = login
-        this.fullName = fullName
+    // Function to update the rosterEmployeeRow based on id
+    function updateRosterEmployeeRow() {
+        picker.rosterEmployeeRow = picker.roster.filter(row => picker.id === row.employeeId);
+        // Assuming each row has a 'tenure' property
+        if (picker.rosterEmployeeRow.length > 0) {
+            picker.tenure = picker.rosterEmployeeRow[0].tenure;
+        }
     }
 
-// Utilisation du tableau roster pour agrémenter le profil Picker
-    roster = [] 
+    // You can expose the updateRosterEmployeeRow method if needed, or just call it internally
+    updateRosterEmployeeRow();
 
-// Utilisation de la ligne où se trouve les informations du picker.
-    rosterEmployeeRow = [] 
-
-// Recherche de la ligne en fonction du picker id.
-    rosterEmployeeRow = this.roster.filter(row => (this.id === row.employeeId)) 
-
-// Initialisation du tenure avec la ligne dans la rosterEmployeeRow.
-    tenure = this.rosterEmployeeRow.tenure
-
+    return picker;
 }

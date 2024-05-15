@@ -7,7 +7,7 @@ header {
     right: 0px;
     height: 100px;
     color: rgb(0, 0, 0);
-    background: linear-gradient(to bottom left,transparent,white),url(librairy/steamwallpaper.jpg);
+    background: linear-gradient(to bottom left,transparent,white),url(assets/steamwallpaper.jpg);
     z-index: 1500;
     border: 0px;
 }
@@ -52,7 +52,7 @@ container {
     bottom: 0px;
     width: 160px;
     padding: 20px;   
-    background:linear-gradient(to top,transparent,95%,white),url(librairy/spacewallpaper.jpg!d);
+    background:linear-gradient(to top,transparent,95%,white),url(assets/spacewallpaper.jpg);
    
     border: 0px;
    background-size:220px;

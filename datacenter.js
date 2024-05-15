@@ -1,26 +1,25 @@
-function placeHolder(type,number){
-  return `https://jsonplaceholder.typicode.com/${type}/${number}`
-}
-
 const types = [
   "posts",
-  "comments"	,
-  "albums"	,
+  "comments",
+  "albums",
   "photos",
   "todos",
-  "users"]
+  "users"
+]
 
-  async function loadData(types,localJsonName) {
-    try {
-      console.log(`Téléchargement de la page ${placeHolder(types,"")}.`)
-      const data = await fetch(placeHolder(types,""));
-      const jsonData = await data.json();
-      const jsonString = await JSON.stringify(jsonData)
-      await localStorage.setItem(localJsonName,jsonString)
-      await localStorage.setItem("filteredJson",null)
+async function loadData(types, localJsonName) {
+  try {
+    console.log(`Téléchargement de la page https://jsonplaceholder.typicode.com/${types}...`);
+    const data = await fetch(`https://jsonplaceholder.typicode.com/${types}`);
+    const jsonData = await data.json();
+    const jsonString = await JSON.stringify(jsonData);
+
+    localStorage.setItem(localJsonName, jsonString);
+    localStorage.setItem("filteredJson", null);
+
     return jsonData
-    } 
-    catch (error) {
-    return console.error('Error loading data:', error);
+  } catch (error) {
+    console.error('Error loading data:', error);
+    return null;
   }
 }
